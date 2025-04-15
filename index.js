@@ -1,14 +1,20 @@
-//Buscando tudo que o express exporta para utilizar todas as funcionalidades
 const express = require("express");
 
 const server = express();
 
-//localhost:3000/curso
-server.get("/curso", (req, res) => {
-  //req dados da aplicação
-  //res dados que serão enviados para o cliente
+// server.get("/curso", (req, res) => {
+//   const nome = req.query.nome;
+
+//   return res.json({
+//     curso: `Aprendendo ${nome}`,
+//   });
+// });
+
+server.get("/curso/:id", (req, res) => {
+  const id = req.params.id;
+
   return res.json({
-    curso: "nodejs",
+    curso: `Id do curso: ${id}`,
   });
 });
 
