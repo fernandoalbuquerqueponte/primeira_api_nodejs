@@ -2,6 +2,8 @@ const express = require("express");
 
 const server = express();
 
+server.use(express.json());
+
 // server.get("/curso", (req, res) => {
 //   const nome = req.query.nome;
 
@@ -10,30 +12,51 @@ const server = express();
 //   });
 // });
 
-const cursos = [
-  {
-    name: "HTML e CSS",
-    description: "Aprenda HTML e CSS do zero",
-    duration: "2 meses",
-  },
-  {
-    name: "JavaScript",
-    description: "Aprenda JavaScript do zero",
-    duration: "3 meses",
-  },
-  {
-    name: "Java",
-    description: "Aprenda Java do zero",
-    duration: "4 meses",
-  },
-  {
-    name: "Python",
-    description: "Aprenda Python do zero",
-    duration: "5 meses",
-  },
-];
+const cursos = ["HTML e CSS", "JavaScript", "Java", "Python"];
 
-server.get("/curso/:index", (req, res) => {
+//read
+server.get("/cursos3", (req, res) => {
+  return res.json(cursos);
+});
+
+//create
+
+server.post("/cursos", (req, res) => {
+  const { name, description, duration } = req.body;
+
+  cursos.push({
+    name: name,
+    description: description,
+    duration: duration,
+  });
+
+  return res.json(cursos);
+});
+
+//update
+server.put("/cursos/:index", (req, res) => {
+  const { index } = req.params;
+  const { name, description, duration } = req.body;
+
+  cursos[index] = {
+    name: name,
+    description: description,
+    duration: duration,
+  };
+
+  return res.json(cursos);
+});
+
+//delete
+server.delete("/cursos/:index", (req, res) => {
+  const { index } = req.params;
+
+  cursos.splice(index, 1);
+
+  return res.send();
+});
+
+server.get("/cursos/:index", (req, res) => {
   const { index } = req.params;
 
   return res.json(cursos[index]);
